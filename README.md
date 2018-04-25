@@ -15,9 +15,10 @@ Download the program from the [Innovation Lab](https://innovation-lab.ca/) in th
 
 ## Running the Program
 1. Open Git Bash and navigate to the root directory of the program. 
-2. Enter the command:
+2. Replace the ```<directory-name>``` portion of ```var app = require('../<directory-name>');``` in ```bin/www```
+3. Enter the command:
 ```npm start```
-3. Open the browser enter ```localhost:3000``` as the url in the address bar.
+4. Open the browser enter ```localhost:3000``` as the url in the address bar.
 
 
 ## Issues with Start-up
