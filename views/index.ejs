@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= title %></title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
+        <link rel='stylesheet' href='/stylesheets/style.css' />
+        <style>
+            
+        </style>
+    </head>
+    <body>
+        <nav class="navbar navbar-default">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#"><%= title %></a>
+            </div>
+        </nav>
+        
+        <div class="container">
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Get Medication Dispense Information</div>
+                    <div class="panel-body">
+                        <form class="form" id="sendMessageForm" onsubmit="sendFhirMessage()">
+                            <div class="form-group row">
+                                <label for="healthCardNumber" class="col-md-4 col-form-label">Health Card Number</label>
+                                <div class="col-md-4">
+                                    <input type="text" class="form-control" id="healthCardNumber" placeholder="Health Card #" maxlength="10" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <button type="button" class="btn" onclick="generateSample()">Sample HCN</button>
+                                </div>
+                            </div>
+
+                            <button type="button" class="btn btn-primary" onclick="sendFhirMessage()">Search</button>                   
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Patient</div>
+                    <div class="panel-body">
+                        <div class="form-group row">
+                            <label class="col-md-4 col-form-label">Health Card Number: </label>
+                            <div id="patientHealthCardNumber" class="col-md-8"></div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <label class="col-md-4 col-form-label">First Name: </label>
+                            <div id="patientFirstName" class="col-md-8"></div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <label class="col-md-4 col-form-label">Last Name: </label>
+                            <div id="patientLastName" class="col-md-8"></div>
+                        </div>
+                        
+                         <div class="form-group row">
+                            <label class="col-md-4 col-form-label">Gender: </label>
+                            <div id="patientGender" class="col-md-8"></div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <label class="col-md-4 col-form-label">Birth Date: </label>
+                            <div id="patientBirthDate" class="col-md-8"></div>
+                        </div>
+                    </div>           
+                    
+                </div>
+                
+                <div class="panel panel-default">
+                    <div class="panel-heading">Medications</div>
+                    <div class="panel-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Medication</th>
+                                    <th>Date Handed Over</th>
+                                    <th>Days Supply</th>
+                                </tr>
+                            </thead>
+                            <tbody id="medications">
+                            </tbody>
+                        </table>                        
+                    </div> 
+                </div>
+                
+            </div>
+            
+        </div>
+
+        <script>
+            /**
+            * Fills in search field with DHDR sample health card number.
+            *
+            */
+            function generateSample() {
+                document.getElementById("healthCardNumber").value = "6948425589";
+            }           
+
+            /**
+            * Makes ajax call to controller (index.js).
+            *
+            */
+            function sendFhirMessage() {
+                var xhttp = new XMLHttpRequest();
+
+                xhttp.onreadystatechange = function () {
+                    if (this.readyState === 4) {
+                        var entries = JSON.parse(this.response);
+                        displayPatient(entries[0].MasterPatient);
+                        displayMedicationDispenses(entries);
+                    }
+                };
+
+                xhttp.open("POST", "/", true);
+
+                xhttp.setRequestHeader("Content-Type", "application/json");
+
+                var req = JSON.stringify({
+                    healthCardNumber: document.getElementById("healthCardNumber").value
+                });
+
+                xhttp.send(req);
+            }     
+            
+            /**
+            * Displays patient information from DHDR query.
+            *
+            */
+            function displayPatient(patient){
+                document.getElementById("patientHealthCardNumber").innerHTML = patient.healthCardNumber;
+                document.getElementById("patientFirstName").innerHTML = patient.givenName;
+                document.getElementById("patientLastName").innerHTML = patient.familyName;
+                document.getElementById("patientGender").innerHTML = patient.gender;
+                document.getElementById("patientBirthDate").innerHTML = patient.birthDate;
+            }
+            
+            /**
+            * Displays medication information DHDR query.
+            *
+            */
+            function displayMedicationDispenses(entries){
+                 var medications = "";
+                 
+                 for(var i = 0; i < entries.length; i++){
+                     medications += '<tr><td>' + 
+                         entries[i].Medication.medicationName + '</td><td>' + 
+                         entries[i].MedicationDispense.whenHandedOver + '</td><td>' + 
+                         entries[i].MedicationDispense.daysSupply + '</td></tr>';
+                 }                 
+                 
+                document.getElementById("medications").innerHTML = medications;
+            }
+        </script>
+    </body>
+</html>
