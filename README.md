@@ -19,5 +19,23 @@ Download the program from the [Innovation Lab](https://innovation-lab.ca/) in th
 ```npm start```
 3. Open the browser enter ```localhost:3000``` as the url in the address bar.
 
+
+## Issues with Start-up
+On run of the ```npm start``` command, you may receive this error:
+```Error: Cannot find module 'http-errors'```
+    ```at Function.Module._resolveFilename (module.js:547:15)```
+    ```at Function.Module._load (module.js:474:25)```
+    ```at Module.require (module.js:596:17)```
+    ```at require (internal/module.js:11:18)```
+    ```at Object.<anonymous> (C:\Users\ferreirac\Documents\app\app.js:1:81)```
+    ```at Module._compile (module.js:652:30)```
+    ```at Object.Module._extensions..js (module.js:663:10)```
+    ```at Module.load (module.js:565:32)```
+    ```at tryModuleLoad (module.js:505:12)```
+    ```at Function.Module._load (module.js:497:3)```
+
+To resolve this error, run the following command:
+```npm install http-errors```
+
 ## Author
 Lee Van Buskirk - Mohawk College MEDIC
