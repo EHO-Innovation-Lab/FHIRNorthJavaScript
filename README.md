@@ -1,5 +1,8 @@
 # DHDR Node.js Viewer
-This viewer was made to demonstrate how a Node.js web application can interact with Innovation Lab's DHDR. Queries are made by submitting a health card number to its own controller. From there, a query is built and then sent to Innovation Lab's DHDR server. A bundle is then returned and displayed client side.
+This viewer was made to demonstrate how a Node.js web application can interact
+with Innovation Lab's DHDR. Queries are made by submitting a health card number
+to its own controller. From there, a query is built and then sent to Innovation
+Lab's DHDR server. A bundle is then returned and displayed client side.
 
 ## Getting Started
 These instructions will help you download and install the project on your local machine for development and testing purposes.
@@ -11,32 +14,21 @@ Make sure you have the following installed:
 - Git Bash
 
 ### Downloading the Program
-Download the program from the [Innovation Lab](https://innovation-lab.ca/) in the [Code Sharing Repository](https://innovation-lab.ca/repository).
+Download the program from [Innovation Lab](https://innovation-lab.ca/) in the [Code Sharing Repository](https://innovation-lab.ca/repository).
 
 ## Running the Program
-1. Open Git Bash and navigate to the root directory of the program. 
-2. Replace the ```<directory-name>``` portion of ```var app = require('../<directory-name>');``` in ```bin/www``` to the directory of the project files
-3. Enter the command:
+1. Open Git Bash and navigate to the root directory of the program.
+2. In a code editor, open the project and navigate to ```bin/www```. From there, replace the ```<directory-name>``` portion of ```var app = require('../<directory-name>')```.
+2. Enter the command:
 ```npm start```
-4. Open the browser enter ```localhost:3000``` as the url in the address bar.
-
+3. Open the browser enter ```localhost:3000``` as the url in the address bar.
 
 ## Issues with Start-up
-On run of the ```npm start``` command, you may receive this error:
-```Error: Cannot find module 'http-errors'```
-    ```at Function.Module._resolveFilename (module.js:547:15)```
-    ```at Function.Module._load (module.js:474:25)```
-    ```at Module.require (module.js:596:17)```
-    ```at require (internal/module.js:11:18)```
-    ```at Object.<anonymous> (<directory>\app.js:1:81)```
-    ```at Module._compile (module.js:652:30)```
-    ```at Object.Module._extensions..js (module.js:663:10)```
-    ```at Module.load (module.js:565:32)```
-    ```at tryModuleLoad (module.js:505:12)```
-    ```at Function.Module._load (module.js:497:3)```
+After entering ```npm start```, you may receive this error: ```Error: Cannot find module 'http-errors' at...```
 
-To resolve this error, run the following command:
-```npm install http-errors```
+To resolve this error, run the following command: ```npm install http-errors```
+
+If any other issues are encountered, feel free to make a post in the Innovation Lab [forum](https://innovation-lab.ca/discussions/topic/q-a-for-fhir-in-js/).
 
 ## Author
-Lee Van Buskirk - Mohawk College MEDIC
+Lee Van Buskirk - Ideaworks MEDIC
